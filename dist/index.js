@@ -24,7 +24,7 @@ app.get("/api/status", (_, res) => {
 app.get("/api/hello", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { visitor_name = "Mark" } = req.query;
     try {
-        const client_ip = req.ip;
+        const client_ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
         const geo = yield axios_1.default.get(`https://get.geojs.io/v1/ip/geo/${client_ip}.json`);
         const location = geo.data.city;
         const greeting = `Hello, ${visitor_name}!, in ${location}`;
