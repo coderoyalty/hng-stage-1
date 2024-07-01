@@ -27,7 +27,9 @@ app.get("/api/hello", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const client_ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
         const geo = yield axios_1.default.get(`https://get.geojs.io/v1/ip/geo/${client_ip}.json`);
         const location = geo.data.city;
-        const greeting = `Hello, ${visitor_name}!, in ${location}`;
+        const weather_url = `https://api.open-meteo.com/v1/forecast?latitude=${geo.data.latitude}&longitude=${geo.data.longitude}&current=temperature`;
+        const response = yield axios_1.default.get(weather_url);
+        const greeting = `Hello, ${visitor_name}!, the temperature is ${response.data.current.temperature} degrees Celsius in ${location}`;
         return res.status(200).json({
             client_ip,
             greeting,

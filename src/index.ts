@@ -23,7 +23,11 @@ app.get("/api/hello", async (req: Request, res: Response) => {
 
     const location = geo.data.city;
 
-    const greeting = `Hello, ${visitor_name}!, in ${location}`;
+    const weather_url = `https://api.open-meteo.com/v1/forecast?latitude=${geo.data.latitude}&longitude=${geo.data.longitude}&current=temperature`;
+
+    const response = await axios.get(weather_url);
+
+    const greeting = `Hello, ${visitor_name}!, the temperature is ${response.data.current.temperature} degrees Celsius in ${location}`;
 
     return res.status(200).json({
       client_ip,
