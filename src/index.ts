@@ -38,3 +38,5 @@ app.get("/api/hello", async (req: Request, res: Response) => {
 app.listen(5500, () => {
   console.log("Server Running!");
 });
+
+export default app;
